@@ -1,0 +1,28 @@
+mod array;
+
+use array::array::Array;
+
+fn main() {
+    test_array();
+}
+
+fn test_array() {
+    let mut arr = Array::new();
+
+    let mut i = 0;
+
+    while i < 7 {
+        arr.push(i);
+        i += 1;
+    }
+
+    arr.print();
+
+    arr.insert_at(1, 69);
+
+    arr.print();
+
+    arr.delete_at(5);
+
+    arr.print();
+}
