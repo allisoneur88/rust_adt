@@ -25,16 +25,14 @@ pub struct Hashtable<K: std::fmt::Debug, V: std::fmt::Debug> {
 
 impl<K: std::fmt::Debug, V: std::fmt::Debug> Hashtable<K, V> {
     fn new(size: usize) -> Self {
-
         let mut data: Array<Array<Pair<K, V>>> = Array::new();
 
-        for i in 0..size {
+        for _ in 0..size {
             data.push(Array::new());
         }
 
-
         Hashtable {
-            data: Array::new(),
+            data: data,
             keys: Array::new(),
             size: size,
             resize_threshhold: 0.75,
