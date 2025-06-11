@@ -1,13 +1,13 @@
-mod array;
-
-use array::array::Array;
+mod data_structures;
+use data_structures::array::array::Array;
+use data_structures::hashtable::hashtable::Hashtable;
 
 fn main() {
     test_array();
 }
 
 fn test_array() {
-    let mut arr = Array::new();
+    let mut arr: Array<isize> = Array::new();
 
     let mut i = 0;
 
