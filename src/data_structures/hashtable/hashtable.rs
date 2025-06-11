@@ -28,7 +28,7 @@ impl<K: std::fmt::Debug, V: std::fmt::Debug> Hashtable<K, V> {
         let mut data: Array<Array<Pair<K, V>>> = Array::new();
 
         for _ in 0..size {
-            data.push(Array::new());
+            data.push(Array::new()); //  data.push(Array::<Pair<K, V>>::new());
         }
 
         Hashtable {
