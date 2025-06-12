@@ -7,12 +7,12 @@ use std::io::Error;
 use std::io::ErrorKind::NotFound;
 
 #[derive(Debug)]
-struct Pair<K: Debug + Hash + Eq + Clone, V: Debug> {
+struct Pair<K: Debug + Hash + Eq + Clone, V: Debug + Clone> {
     key: K,
     value: V,
 }
 
-impl<K: Debug + Hash + Eq + Clone, V: Debug> Pair<K, V> {
+impl<K: Debug + Hash + Eq + Clone, V: Debug + Clone> Pair<K, V> {
     fn new(key: K, value: V) -> Self {
         Pair {
             key: key,
@@ -22,14 +22,14 @@ impl<K: Debug + Hash + Eq + Clone, V: Debug> Pair<K, V> {
 }
 
 #[derive(Debug)]
-pub struct Hashtable<K: Debug + Hash + Eq + Clone, V: Debug> {
+pub struct Hashtable<K: Debug + Hash + Eq + Clone, V: Debug + Clone> {
     data: Array<Array<Pair<K, V>>>,
     keys: Array<K>,
     capacity: usize,
     resize_threshhold: f64,
 }
 
-impl<K: Debug + Hash + Eq + Clone, V: Debug> Hashtable<K, V> {
+impl<K: Debug + Hash + Eq + Clone, V: Debug + Clone> Hashtable<K, V> {
     pub fn new() -> Self {
         let capacity = 50;
 
@@ -109,11 +109,33 @@ impl<K: Debug + Hash + Eq + Clone, V: Debug> Hashtable<K, V> {
                 }
                 Err(Error::new(NotFound, "Key not found"))
             }
-            None => Err(Error::other("Key not found")),
+            None => Err(Error::new(NotFound, "Key not found")),
         }
     }
 
-    fn resize_and_rehash(&mut self) {}
+    fn resize_and_rehash(&mut self) {
+        let new_capacity = self.capacity * 2;
+        let mut new_data: Array<Array<Pair<K, V>>> = Array::with_capacity(new_capacity);
+
+        for _ in 0..new_capacity {
+            new_data.push(Array::new()); //  data.push(Array::<Pair<K, V>>::new());
+        }
+
+        for key in self.keys.get_all() {
+            if let Ok(value_ref) = self.get(key) {
+                let item = Pair::new(key.clone(), value_ref.clone());
+                let new_index = self.simple_hash(key, new_capacity);
+                let new_bucket = new_data.get_by_index_mut(new_index).unwrap();
+
+                new_bucket.push(item);
+            } else {
+                eprintln!("Warning: key {:?} was in keys but not found in table", key);
+            }
+        }
+
+        self.data = new_data;
+        self.capacity = new_capacity;
+    }
 
     fn needs_resizing(&self) -> bool {
         self.keys.len() as f64 / self.capacity as f64 > self.resize_threshhold
