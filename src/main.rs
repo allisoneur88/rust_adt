@@ -5,10 +5,12 @@ use data_structures::array::array::Array;
 use data_structures::hashtable::hashtable::Hashtable;
 use data_structures::list::list::List;
 use data_structures::singly_linked_list::singly_linked_list::SinglyLinkedList;
+use data_structures::stack::stack::Stack;
 
 fn main() {
     // test_hash();
-    test_list();
+    //test_list();
+    test_stack();
 }
 
 fn test_hash() {
@@ -62,4 +64,16 @@ fn test_list() {
 
     println!("length: {}", list.len());
     println!("{}", list.stringify());
+}
+
+fn test_stack() {
+    let mut stack = Stack::new();
+    stack.push("1");
+    stack.push("2");
+
+    println!(
+        "first pop():{}, second pop(): {}",
+        stack.pop().unwrap(),
+        stack.pop().unwrap()
+    )
 }
