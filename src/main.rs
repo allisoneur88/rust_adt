@@ -3,13 +3,16 @@ use std::ptr::hash;
 
 use data_structures::array::array::Array;
 use data_structures::hashtable::hashtable::Hashtable;
+use data_structures::list::list::List;
+use data_structures::singly_linked_list::singly_linked_list::SinglyLinkedList;
 
 fn main() {
-    test_hash();
+    // test_hash();
+    test_list();
 }
 
 fn test_hash() {
-    let mut hash: Hashtable<String, usize> = Hashtable::new();
+    let mut hash: Hashtable<String, usize> = Hashtable::with_capacity(1);
 
     let age = "age".to_string();
 
@@ -20,6 +23,8 @@ fn test_hash() {
     if let Ok(val) = hash.get(&age) {
         println!("age: {val}")
     }
+
+    println!("{:#?}", hash);
 }
 
 fn test_array() {
@@ -46,4 +51,15 @@ fn test_array() {
         Some(val) => println!("{}", val),
         None => println!("Nothing there"),
     }
+}
+
+fn test_list() {
+    let mut list = List::new();
+
+    list = list.prepend(1);
+    list = list.prepend(2);
+    list = list.prepend(3);
+
+    println!("length: {}", list.len());
+    println!("{}", list.stringify());
 }
