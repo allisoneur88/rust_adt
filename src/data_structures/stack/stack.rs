@@ -26,4 +26,8 @@ impl<T: Debug> Stack<T> {
     pub fn peek(&self) -> Option<&T> {
         self.data.get_by_index(self.data.len() - 1)
     }
+
+    pub fn len(&self) -> usize {
+        self.data.len()
+    }
 }

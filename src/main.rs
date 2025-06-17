@@ -1,9 +1,9 @@
 mod data_structures;
-use std::ptr::hash;
 
 use data_structures::array::array::Array;
 use data_structures::hashtable::hashtable::Hashtable;
 use data_structures::list::list::List;
+use data_structures::queue::queue_on_stacks::QueueOnStacks;
 use data_structures::singly_linked_list::singly_linked_list::SinglyLinkedList;
 use data_structures::stack::stack::Stack;
 
@@ -76,4 +76,11 @@ fn test_stack() {
         stack.pop().unwrap(),
         stack.pop().unwrap()
     )
+}
+
+fn test_queue() {
+    let mut queue = QueueOnStacks::new();
+    queue.enqueue(4);
+
+    _ = queue.dequeue();
 }
