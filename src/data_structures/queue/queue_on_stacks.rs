@@ -44,6 +44,10 @@ impl<T: Debug> QueueOnStacks<T> {
         self.dequeue_stack.peek()
     }
 
+    pub fn len(&self) -> usize {
+        self.enqueue_stack.len() + self.dequeue_stack.len()
+    }
+
     pub fn is_empty(&self) -> bool {
         self.enqueue_stack.len() + self.dequeue_stack.len() == 0
     }
