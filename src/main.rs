@@ -10,7 +10,8 @@ use data_structures::stack::stack::Stack;
 fn main() {
     // test_hash();
     //test_list();
-    test_stack();
+    //test_stack();
+    test_queue();
 }
 
 fn test_hash() {
@@ -83,4 +84,17 @@ fn test_queue() {
     queue.enqueue(4);
 
     _ = queue.dequeue();
+
+    match queue.dequeue() {
+        Some(val) => println!("dequeued val: {}", val),
+        None => println!("nothing to dequeue"),
+    }
+
+    queue.enqueue(69);
+    queue.enqueue(33);
+
+    match queue.peek() {
+        Some(val) => println!("first in line: {}", val),
+        None => println!("queue is empty"),
+    }
 }
