@@ -26,11 +26,27 @@ impl<T: Debug> QueueOnStacks<T> {
             return None;
         }
         if self.dequeue_stack.is_empty() {
-            while let Some(value) = self.enqueue_stack.pop() {
-                self.dequeue_stack.push(value);
-            }
+            self.move_items();
         }
         self.dequeue_stack.pop()
+    }
+
+    pub fn peek(&mut self) -> Option<&T> {
+        if self.is_empty() {
+            return None;
+        }
+
+        if self.dequeue_stack.is_empty() {
+            self.move_items();
+        }
+
+        self.dequeue_stack.peek()
+    }
+
+    fn move_items(&mut self) {
+        while let Some(value) = self.enqueue_stack.pop() {
+            self.dequeue_stack.push(value);
+        }
     }
 
     fn is_empty(&self) -> bool {
