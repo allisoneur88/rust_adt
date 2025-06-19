@@ -4,6 +4,7 @@ use std::fmt::Debug;
 
 use super::super::array::array::Array;
 
+#[derive(Debug)]
 pub struct Stack<T: Debug> {
     data: Array<T>,
 }
