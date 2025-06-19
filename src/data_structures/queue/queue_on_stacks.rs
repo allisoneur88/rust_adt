@@ -1,3 +1,4 @@
+use std::collections::btree_map::Range;
 use std::fmt::Debug;
 
 use super::super::array::array::Array;
@@ -21,8 +22,18 @@ impl<T: Debug> QueueOnStacks<T> {
     }
 
     pub fn dequeue(&mut self) -> Option<T> {
-        // if self.dequeue_stack // TODO: Add len() to stack implementation
-        if self.dequeue_stack.len() == 0 {}
+        if self.is_empty() {
+            return None;
+        }
+        if self.dequeue_stack.is_empty() {
+            while let Some(value) = self.enqueue_stack.pop() {
+                self.dequeue_stack.push(value);
+            }
+        }
         self.dequeue_stack.pop()
+    }
+
+    fn is_empty(&self) -> bool {
+        self.enqueue_stack.len() + self.dequeue_stack.len() == 0
     }
 }
